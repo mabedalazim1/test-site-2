@@ -275,41 +275,8 @@ const getDegree_B = async (req, res, next) => {
     }
 }
 
-const getLoginData = async (req, res, next) => {
-    
-    try {
-       
-        const data = await Login_count.findAll({
-            attributes: [
-                'userSchoolId', 
-            ],
-            include:[
-                {model:User, attributes:['userSchoolId'],
-                where:{
-                    userSchoolId : 'userSchoolId'
-                },required: true
-                }
-            ]
-        })
-        if(data.length === 0){
-            res.status(204).send({ message: "No Data"})
-            return 
-        
-       
-       
-        } else {
-            res.status(200).json(data)
-        }
-    }
-    catch (err) {
-        res.status(500).json({ message: err })
-        console.log("Error", err)
-    }
-}
-
 module.exports = {
     getDegree,
     getDegree_B,
     getMark,
-    getLoginData,
 }

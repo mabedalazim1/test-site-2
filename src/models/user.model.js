@@ -8,14 +8,13 @@ module.exports = (db,type)=>{
           },firstName: {
             type: type.STRING
           },
-          schoolImgUrl: {
-            type: type.STRING
-          },
           fullName: {
             type: type.STRING
           },
           userSchoolId: {
             type: type.INTEGER
-          }
+          },stdCode: {
+            type: type.STRING
+          },
     })
     }

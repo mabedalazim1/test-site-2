@@ -14,7 +14,6 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(morgan('dev'));
 
-
 // Auth Router
 require('./src/routes/auth.routes')(app);
 
@@ -35,7 +34,7 @@ initRoutes(app);
 
 // CURD Routers
 const curdRrouter = require("./src/routes/curdRouter");
-app.use('/api/', curdRrouter.imagesection );
+app.use('/api/', curdRrouter.imagesection);
 app.use('/api/', curdRrouter.imageCatogery);
 app.use('/api/', curdRrouter.imageData);
 
@@ -47,34 +46,34 @@ const db = require('./config/database');
 const sql = require('./src/models');
 const sudentSql = require('./src/models/school.model');
 const modifaySequelize = async () => {
-    try {
-        //await sql.creatSqlData()
-        await sql.initial()
-       // await sudentSql.creatSqlStudentData()
-        //await sudentSql.initialSchoolData()
-        await db.authenticate()
-        console.log('Connection has been established successfully.')
-    } catch (error) {
-        console.error('Unable to connect to the database:', error)
-    }
+  try {
+    //await sql.creatSqlData()
+    await sql.initial()
+    // await sudentSql.creatSqlStudentData()
+    //await sudentSql.initialSchoolData()
+    await db.authenticate()
+    console.log('Connection has been established successfully.')
+  } catch (error) {
+    console.error('Unable to connect to the database:', error)
+  }
 }
 modifaySequelize()
 
-  // Handel route Error
-  app.use((req, res, next) => {
-    const error = new Error('Not Found')
-    error.status = 404  
-    next(error);
+// Handel route Error
+app.use((req, res, next) => {
+  const error = new Error('Not Found')
+  error.status = 404
+  next(error);
+});
+app.use((error, req, res, next) => {
+  res.status(error.status || 500);
+  res.json({
+    error: {
+      message: error.message
+    }
   });
-  app.use((error, req, res, next) => {
-    res.status(error.status || 500);
-    res.json({
-        error: {
-          message:error.message
-      }
-    });
-  });
+});
 
 
 
-app.listen(port,()=>console.log(`app is running on ${port}`))
+app.listen(port, () => console.log(`app is running on ${port}`))

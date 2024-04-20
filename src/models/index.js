@@ -6,7 +6,10 @@ const ImgSectionModel = require('./imageSection.model');
 const UserModel = require('./user.model');
 const RoleModel = require('./role.model');
 const UserRoleModel = require('./user_role.model');
+const PushSubscriptionModel = require('./push_subscription.model')
 const initial = require('../controllers/initialData');
+const pushSubscriptionModel = require('./push_subscription.model');
+
 
 // Create Models
 const ImageData = ImageDataModel(db, Sequelize);
@@ -15,6 +18,7 @@ const ImageSection = ImgSectionModel(db, Sequelize);
 const User = UserModel(db, Sequelize);
 const Role = RoleModel(db, Sequelize);
 const UserRole = UserRoleModel(db, Sequelize);
+const PushSubscription = pushSubscriptionModel(db,Sequelize);
 
 // Define Relationships
 ImageSection.hasMany(ImagCatogery, {
@@ -56,6 +60,7 @@ const dataModels = {
     Role,
     ROLES,
     UserRole,
+    PushSubscription,
     creatSqlData,
     initial,
 }

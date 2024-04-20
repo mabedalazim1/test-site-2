@@ -28,7 +28,8 @@ getImgPagination = async (req, res, next) => {
             ],
             include: {
                 model: imageData,
-                attributes: ["id", "imgUrl", "imgDesc"],
+                attributes: ["id", "imgUrl", "imgDesc"], 
+                limit:1,
             },
             limit,
             offset,

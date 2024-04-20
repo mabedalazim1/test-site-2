@@ -1,5 +1,4 @@
-const { TIME } = require('sequelize')
-const { Count_Visits,Login_count } = require('./../models/school.model')
+const { Count_Visits,Login_count , LoginData} = require('./../models/school.model')
 
 const addVisits = async (req, res, next) => {
     try {
@@ -56,8 +55,6 @@ const countLogin = async (req, res, next) => {
     try {
       
         const data = await Login_count.findAll()
-        
-        
         if (data.length === 0) {
             res.status(204).send({ message: "No Content" })
         } else {
@@ -74,15 +71,14 @@ const countLogin = async (req, res, next) => {
 const addLogin = async (req, res, next) => {
     try {
       
-        let body = req.body
-        var date = new Date();
-        
-        const data = await Login_count.create({
-            userSchoolId : body.userSchoolId,
-            page : body.page,
+        const date = new Date();
+        const new_count_login = {
+            userSchoolId: req.body.userSchoolId,
+            page : req.body.page,
             createdAt: date,
             updatedAt: date,
-        })
+        }
+        const data = await Login_count.create(new_count_login)
 
         if (data.length === 0) {
             res.status(204).send({ message: "No Content" })
@@ -96,10 +92,25 @@ const addLogin = async (req, res, next) => {
     }
 }
 
-
+const loginData = async (req, res, next) => {
+    try {
+      
+        const data = await LoginData.findAll()
+        if (data.length === 0) {
+            res.status(204).send({ message: "No Content" })
+        } else {
+            res.status(200).json({data})
+        }
+    }
+    catch (err) {
+        res.status(500).json({ message: err })
+        console.log("Error", err)
+    }
+}
 module.exports = {
     addVisits,
     countVisits,
     countLogin,
     addLogin,
+    loginData,
 }

@@ -2,12 +2,19 @@ const express = require('express');
 const router = express.Router();
 const controller = require('../controllers/file.controller');
 const imgController = require('../controllers/image.controller');
-const { authJwt } = require("../middleware");
+const { authJwt, uploadExcel } = require("../middleware");
 const listImages = require('./../controllers/imgList.controller')
 const ImgPagination = require('./../controllers/imgPagination')
 // School Data 
-const { getDegree, getMark, getDegree_B, getLoginData } = require('./../controllers/school.data.controller');
-const { countVisits,addVisits, countLogin, addLogin } = require('../controllers/visit.count.controller');
+const { getDegree, getMark, getDegree_B } = require('./../controllers/school.data.controller');
+const { countVisits,addVisits, countLogin, addLogin ,loginData } = require('../controllers/visit.count.controller');
+const { LoginData } = require('../models/school.model');
+
+// Excel Files
+const excelController = require("./../controllers/excel.controller");
+
+// Send Notifications
+const notifications = require ("./../controllers/notifications.controller");
 
 const testAdmin = [authJwt.verifyToken, authJwt.isAdmin]
 const testisStdOrAdin = [authJwt.verifyToken, authJwt.isStdOrAdmin]
@@ -58,6 +65,16 @@ router.get('/api/getListInfoById/:secid/:classid/',testisStdOrAdin, listImages.g
     res.send('API is working properly Kps School');
   });
 
+  
+// Excel Router
+router.post("/api/upload/student",testAdmin, uploadExcel.single("file"), excelController.upload_student);
+router.post("/api/upload/degree",testAdmin, uploadExcel.single("file"), excelController.upload_degree);
+router.post("/api/upload/mark",testAdmin, uploadExcel.single("file"), excelController.upload_mark);
+router.post("/api/upload/phrase", testAdmin,uploadExcel.single("file"), excelController.upload_phrase);
+router.get("/api/excel", excelController.getTArabic);
+router.get("/api/getuser", excelController.getUsers);
+
+
   // Count Visits
   router.get('/api/addtvisit/:type',addVisits)
   router.get('/api/countvisit',countVisits)
@@ -67,8 +84,15 @@ router.get('/api/getListInfoById/:secid/:classid/',testisStdOrAdin, listImages.g
   router.post('/api/addlogin',testisStdOrAdin,addLogin)
 
   // Login Data
-  router.get('/api/logindata',getLoginData)
+  router.get('/api/logindata',testAdmin,loginData)
+
+  // Send Notifications
+  router.post('/api/subscribe',notifications.subscribe) 
+  router.post('/api/update_subscribe',notifications.update_subscribe)
+  router.post('/api/sendNotification',notifications.sendNotification)
+  
   app.use(router);
+
 }
 
 module.exports = routes

@@ -17,7 +17,7 @@ getCatBySection = async (req, res, next) => {
             res.status(204).json({ message: "No Content" })
         } else {
             res.status(200).json(data)
-        console.log(data)
+        //console.log(data)
          }
     }
     catch (err) {
@@ -37,7 +37,6 @@ getAllDataCatogery = async (req, res, next) => {
                 attributes: ["id", "title"],
             }
         })
-
         if (data.length === 0) {
             res.status(204).json({ message: "No Content" })
         } else {
@@ -69,7 +68,7 @@ getDataByCatogery = async (req, res, next) => {
             res.status(204).json({ message: "No Content" })
         } else {
             res.status(200).json(data)
-        console.log(data)
+        //console.log(data)
          }
     }
     catch (err) {
@@ -101,7 +100,7 @@ getListById = async (req, res, next) => {
             res.status(204).json({ message: "No Content" })
         } else {
             res.status(200).json(data)
-        console.log(data)
+        //console.log(data)
          }
     }
     catch (err) {
@@ -137,7 +136,7 @@ getListInfoById = async (req, res, next) => {
             res.status(204).json({ message: "No Content" })
         } else {
             res.status(200).json(data)
-        console.log(data)
+        //console.log(data)
          }
     }
     catch (err) {
@@ -167,7 +166,7 @@ getList = async (req, res, next) => {
             res.status(204).json({ message: "No Content" })
         } else {
             res.status(200).json(data)
-        console.log(data)
+        //console.log(data)
          }
     }
     catch (err) {

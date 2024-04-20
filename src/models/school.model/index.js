@@ -23,7 +23,7 @@ const TestKindModel = require('./test.kind.model');
 const UserdModel = require('./../user.model');
 const LoginModel = require('./login_count.model');
 const CountModel = require('./count.model');
-
+const LoginDataModel = require('./v_login_data.model');
 // Get Data
 const { graderData, classeData, testKindData } = require('../../data/schoolData')
 // Create Models
@@ -51,6 +51,7 @@ const Sort = SortModel(db, Sequelize)
 const User = UserdModel(db, Sequelize)
 const Login = LoginModel(db, Sequelize)
 const Count = CountModel(db, Sequelize)
+const LoginData = LoginDataModel(db, Sequelize)
 
 // Define Relationships
 
@@ -216,6 +217,7 @@ const studentModels = {
     User,
     Login_count: Login,
     Count_Visits : Count,
+    LoginData,
 }
 
 module.exports = studentModels;
